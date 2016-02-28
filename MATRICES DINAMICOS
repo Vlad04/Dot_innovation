@@ -1,0 +1,144 @@
+#include <iostream>
+#include<cstdlib>
+#include<string>
+#include<ctime>
+using namespace std;
+
+//version: matrices implementadas como arreglos de arreglos dinamicos
+double ** createMatrix(int m, int n);
+void deleteMatrix(double **matrix, int m, int n);
+void setIdentity(double **matrix, int n);
+void setRandom(double **matrix, int m, int n);
+double **sumMatrix(double **a, double **b, int m, int n);
+double **multMatrix(double **a, double **b, int m, int n, int l);
+void printMatrix(string title, double **a, int m, int n);
+string matrixToString(double **matrix, int m, int n);
+
+
+int main()
+{
+	int m, n;
+	double **a, **b, **c, **d;
+	m = 3;
+	n = 3;
+	srand(time(NULL));
+	a = createMatrix(m, n);
+	b = createMatrix(m, m);
+	setRandom(a, m, n);
+	setRandom(b, m, n);
+	c = sumMatrix(a, b, m, n);
+	c = multMatrix(a, b, m, n, n);
+	printMatrix("Matrix A", a, m, n);
+	printMatrix("Matrix B", b, m, n);
+	printMatrix("Matrix C = A+B", c, m, n);
+	printMatrix("Matrix D = A*B", d, m, n);
+	deleteMatrix(a, m, n);
+	deleteMatrix(b, n, n);
+	deleteMatrix(c, n, n);
+	deleteMatrix(d, n, n);
+
+
+	return 0;
+}
+
+double ** createMatrix(int m, int n)
+{
+	double **matrix = new double *[m];
+	for (int i = 0; i < m; i++)
+	{
+		matrix[i] = new double[n];
+	}
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			matrix[i][j] = 0.;
+		}
+	}
+	return matrix;
+}
+
+void deleteMatrix(double **matrix, int m, int n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		delete[]matrix[i];
+	}
+	delete[]matrix;
+}
+//matrix transversal
+void setRandom(double **matrix, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (i == j)
+			{
+				matrix[i][j] = 1.;
+			}
+			else
+			{
+				matrix[i][j] = 0.;
+			}
+		}
+	}
+}
+void setRandom(double **matrix, int m, int n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			matrix[i][j] = fmod(rand(), 10);
+		}
+	}
+}
+double **sumMatrix(double **a, double **b, int m, int n)
+{
+	double **c = createMatrix(m, n);
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			c[i][j] = a[i][j] + b[i][j];
+		}
+	}
+	return c;
+}
+
+double **multMatrix(double **a, double **b, int m, int n, int l)
+{
+	double **c = createMatrix(m, l);
+	for (int i = 0; i < m;i++)
+	{
+		for (int k = 0; k < l;k++)
+		{
+			c[i][k] = 0.0;
+			for (int j = 0; j < n;j++)
+			{
+				c[i][k] = c[i][k] + a[i][j] + b[j][k];
+			}
+		}
+	}
+	return c;
+}
+
+string matrixToString(double **matrix, int m, int n)
+{
+	string str = "";
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			str = str + to_string(matrix[i][j]) + "";
+		}
+		str = str + "\n";
+	}
+	return str;
+
+}
+void printMatrix(string title, double **a, int m, int n)
+{
+	cout << title << endl << matrixToString(a, m, n) << endl;
+}
