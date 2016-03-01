@@ -1,144 +1,96 @@
-#include <iostream>
+#include<iostream>
 #include<cstdlib>
 #include<string>
 #include<ctime>
+
 using namespace std;
 
-//version: matrices implementadas como arreglos de arreglos dinamicos
-double ** createMatrix(int m, int n);
-void deleteMatrix(double **matrix, int m, int n);
-void setIdentity(double **matrix, int n);
-void setRandom(double **matrix, int m, int n);
-double **sumMatrix(double **a, double **b, int m, int n);
-double **multMatrix(double **a, double **b, int m, int n, int l);
-void printMatrix(string title, double **a, int m, int n);
-string matrixToString(double **matrix, int m, int n);
-
+double* createMatrix(int filas, int columnas);
+double* sumMatrix(int filas, int columnas, double* matriz1, double* matriz2);
+double* prodMatrix(int filas1, int columnas1, int filas2, int columnas2, double* matriz1, double* matriz2);
+string matrixToString(int filas, int columnas, double* matriz);
+void printMatrix(string cadena, int filas, int columnas, double* matriz);
 
 int main()
 {
-	int m, n;
-	double **a, **b, **c, **d;
-	m = 3;
-	n = 3;
-	srand(time(NULL));
-	a = createMatrix(m, n);
-	b = createMatrix(m, m);
-	setRandom(a, m, n);
-	setRandom(b, m, n);
-	c = sumMatrix(a, b, m, n);
-	c = multMatrix(a, b, m, n, n);
-	printMatrix("Matrix A", a, m, n);
-	printMatrix("Matrix B", b, m, n);
-	printMatrix("Matrix C = A+B", c, m, n);
-	printMatrix("Matrix D = A*B", d, m, n);
-	deleteMatrix(a, m, n);
-	deleteMatrix(b, n, n);
-	deleteMatrix(c, n, n);
-	deleteMatrix(d, n, n);
+	int filas, columnas;
+	double *matriz1, *matriz2, *suma, *producto;
+	filas = 3;
+	columnas = 3;
+	srand((unsigned int)time(NULL));
+	matriz1 = createMatrix(filas, columnas);
+	matriz2 = createMatrix(filas, columnas);
+	suma = sumMatrix(filas, columnas, matriz1, matriz2);
+	producto = prodMatrix(filas, columnas, filas, columnas, matriz1, matriz2);
+	printMatrix("Matrix A", filas, columnas, matriz1);
+	printMatrix("Matrix B", filas, columnas, matriz2);
+	printMatrix("Matrix C = A+B", filas, columnas, suma);
+	printMatrix("Matrix D = A*B", filas, columnas, producto);
 
 
 	return 0;
 }
 
-double ** createMatrix(int m, int n)
+double* createMatrix(int filas, int columnas)
 {
-	double **matrix = new double *[m];
-	for (int i = 0; i < m; i++)
+	double* nuevamatriz = new double[filas*columnas];
+	for (int i = 0; i < (filas*columnas); i++)
 	{
-		matrix[i] = new double[n];
+		nuevamatriz[i] = fmod(rand(), 10.);
 	}
-	for (int i = 0; i < m; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			matrix[i][j] = 0.;
-		}
-	}
-	return matrix;
+	return nuevamatriz;
 }
 
-void deleteMatrix(double **matrix, int m, int n)
+double* sumMatrix(int filas, int columnas, double* matriz1, double* matriz2)
 {
-	for (int i = 0; i < m; i++)
+	double *resultado = new double[filas*columnas];
+	for (int i = 0; i < (filas*columnas); i++)
 	{
-		delete[]matrix[i];
+			resultado[i] = matriz1[i] + matriz2[i];
 	}
-	delete[]matrix;
-}
-//matrix transversal
-void setRandom(double **matrix, int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			if (i == j)
-			{
-				matrix[i][j] = 1.;
-			}
-			else
-			{
-				matrix[i][j] = 0.;
-			}
-		}
-	}
-}
-void setRandom(double **matrix, int m, int n)
-{
-	for (int i = 0; i < m; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			matrix[i][j] = fmod(rand(), 10);
-		}
-	}
-}
-double **sumMatrix(double **a, double **b, int m, int n)
-{
-	double **c = createMatrix(m, n);
-	for (int i = 0; i < m; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			c[i][j] = a[i][j] + b[i][j];
-		}
-	}
-	return c;
+	return resultado;
 }
 
-double **multMatrix(double **a, double **b, int m, int n, int l)
+double* prodMatrix(int filas1, int columnas1, int filas2, int columnas2, double* matriz1, double* matriz2)
 {
-	double **c = createMatrix(m, l);
-	for (int i = 0; i < m;i++)
+	double *resultado = createMatrix(filas1, columnas2);
+	for (int i = 0; i < filas1; i++)
 	{
-		for (int k = 0; k < l;k++)
+		for (int k = 0; k < columnas2; k++)
 		{
-			c[i][k] = 0.0;
-			for (int j = 0; j < n;j++)
+			double sum = 0.;
+			for (int j = 0; j < columnas1; j++)
 			{
-				c[i][k] = c[i][k] + a[i][j] + b[j][k];
+			// resultado[(i*columnas2)+k]+=matriz1[i*columnas1+j]+matriz2[j*columnas2+k];
+				sum += (matriz1[(i*columnas1) + j]) * (matriz2[(j*columnas2) + k]);
 			}
+			resultado[i*columnas2 + k]=sum;
 		}
 	}
-	return c;
+	return resultado;
 }
-
-string matrixToString(double **matrix, int m, int n)
+string matrixToString(int filas, int columnas, double* matriz)
 {
 	string str = "";
-	for (int i = 0; i < m; i++)
+	for (int i = 0; i < filas*columnas; i++)
 	{
-		for (int j = 0; j < n; j++)
+		str = str + to_string(matriz[i])+" ";
+		if ((i + 1) % columnas == 0)
 		{
-			str = str + to_string(matrix[i][j]) + "";
+			str = str + "\n";
 		}
-		str = str + "\n";
 	}
 	return str;
-
 }
-void printMatrix(string title, double **a, int m, int n)
+void printMatrix(string title, int filas, int columnas, double* matriz)
 {
-	cout << title << endl << matrixToString(a, m, n) << endl;
+	cout << title << endl << matrixToString(filas, columnas, matriz) << endl;
 }
+
+
+
+
+
+
+
+
