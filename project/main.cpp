@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <fstream>
 #define PI 3.14159265
+#include <stdlib.h>
+
 
 using namespace std;
 
@@ -80,6 +82,10 @@ int main()
 	int angle_1 = 30;
 	int angle_2 = 30;
 	int steel_kind;
+    int i;
+    std::string cmd;
+
+
 
 	std::cout << "Hello Engineer! \n";
 	std::cout << "Please specify the weight of the tube in Newtons\n";
@@ -139,6 +145,31 @@ int main()
 		cout << solucion[i] << endl;
 	}
 	cout << det << endl;
+
+
+    //plot vectors
+    //TODO put this in a function please :) 
+
+    double x_vector_1;
+    double y_vector_1;
+    double x_vector_2;
+    double y_vector_2;
+
+    x_vector_1 = cos(angle_1*PI/180);
+    x_vector_2 = (-1) * cos(angle_2*PI/180);
+    y_vector_1 = sin(angle_1*PI/180);
+    y_vector_2 = sin(angle_2*PI/180);
+
+
+    cmd = "Rscript plot.R ";
+    cmd += std::to_string(x_vector_1)  + " ";
+    cmd += std::to_string(y_vector_1)  + " ";
+    cmd += std::to_string(x_vector_2)  + " ";
+    cmd += std::to_string(y_vector_2)  + " ";
+
+    cout << cmd << endl;
+
+    i=system (cmd.c_str());
 
 	return 0;
 }
