@@ -10,7 +10,6 @@
 using namespace std;
 
 int solveByGaussJordan(double **ab, int n, double *&x, double &det);
-
 int solveByGaussJordan(double **ab, int n, double *&x, double &det)
 {
 	det = 1.;
@@ -76,27 +75,21 @@ int solveByGaussJordan(double **ab, int n, double *&x, double &det)
 	return 0;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-	int weight = 50;
-	int angle_1 = 30;
-	int angle_2 = 30;
+	int weight=atoi(argv[1]);
+	int angle_1=atoi(argv[2]);
+	int angle_2=atoi(argv[3]);
+	int steel_kind=atoi(argv[4]);
+	/*
+	int weight;
+	int angle_1;
+	int angle_2;
 	int steel_kind;
-    int i;
+	*/
+	int i;
+	
     std::string cmd;
-
-
-
-	std::cout << "Hello Engineer! \n";
-	std::cout << "Please specify the weight of the tube in Newtons\n";
-	std::cin >> weight;
-
-	std::cout << "Please specify the angle of tensor 1 \n";
-	std::cin >> angle_1;
-
-	std::cout << "Please specify the angle of tensor 2 \n";
-	std::cin >> angle_2;
-
 
 	//validate angle
 	if (angle_1 > 90 || angle_2 > 90) {
@@ -104,14 +97,6 @@ int main()
 		return -1;
 	}
 
-
-	std::cout << "Please specify the material of the tensioners \n";
-	std::cout << "1 ) steel \n";
-	std::cout << "2 ) steel 2 \n";
-	std::cout << "3 ) steel 3 \n";
-	std::cin >> steel_kind;
-
-	//create ecuations
 	double**ab = new double*[2];
 	for (int i = 0; i < 2; i++)
 	{
@@ -173,6 +158,7 @@ int main()
 
 	return 0;
 }
+
 
 
 
