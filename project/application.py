@@ -1,6 +1,3 @@
-import kivy
-kivy.require('1.0.6')
-
 from glob import glob
 from random import randint
 from os.path import join, dirname
@@ -9,7 +6,7 @@ from kivy.logger import Logger
 from kivy.uix.scatter import Scatter
 from kivy.properties import StringProperty
 from kivy.uix.label import Label
-
+import os
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
@@ -26,7 +23,7 @@ class PicturesApp(App):
 
         try:
             # load the image
-            picture = Picture(source="rplot.jpg")
+            picture = Picture(source="rplot.jpg",pos_hint={'x':.50, 'y':.20})
             # add to the main field
             root.add_widget(picture)
         except Exception as e:
