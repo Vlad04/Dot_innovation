@@ -38,8 +38,6 @@ class Hello(FloatLayout):
         self.add_widget(self.pass_fail_label)
         self.add_widget(self.go_button)
 
-
-
         self.current_text = "Default"
 
 
