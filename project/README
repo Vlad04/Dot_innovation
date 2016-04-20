@@ -8,3 +8,9 @@ Tipical examples of this can be found here :
 http://www.taringa.net/post/hazlo-tu-mismo/14547502/Problemas-De-Estatica.html
 
 
+# BUILD 
+
+make 
+python (or kivy) application.py
+
+
