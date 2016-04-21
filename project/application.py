@@ -45,7 +45,23 @@ class PicturesApp(App):
 
         #buttons
         go_button = Button(text = "CALCULATE", size_hint=(.3, .1),pos_hint={'x':.05, 'y':.2})
+	def botton(root):
+
+        # the root is created in pictures.kv
         
+		a=int(weight);
+		b=int(angle1);
+		c=int(angle2);
+		d=int(material);
+        	try:
+		    # load the image
+		    os.system("./main a b c d")
+		    # add to the main field
+		except Exception as e:
+		    Logger.exception('UNable to load button <%s>' % filename)
+		#go_button(on_press=print"hola")
+	
+		
         #add to frame
         root.add_widget(main_label)
         root.add_widget(weight)
