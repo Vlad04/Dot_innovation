@@ -19,6 +19,11 @@ y_1 <- as.numeric(args[2])
 x_2 <- as.numeric(args[3])
 y_2 <- as.numeric(args[4])
 
+print(x_1)
+print(y_1)
+print(x_2)
+print(y_2)
+
 plot(c(-1,1),c(-1,1))
 
 arrows(0,0,x_1,y_1,lwd=3)
