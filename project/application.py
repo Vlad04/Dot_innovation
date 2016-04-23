@@ -1,3 +1,4 @@
+from subprocess import Popen, PIPE
 from glob import glob
 from random import randint
 from os.path import join, dirname
@@ -6,7 +7,6 @@ from kivy.logger import Logger
 from kivy.uix.scatter import Scatter
 from kivy.properties import StringProperty
 from kivy.uix.label import Label
-import os
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
@@ -16,7 +16,6 @@ class Picture(Scatter):
     source = StringProperty(None)
 
 class PicturesApp(App):
-
 
     # the root is created in pictures.kv
     def build(root):
@@ -49,19 +48,51 @@ class PicturesApp(App):
         #buttons
         go_button = Button(text = "CALCULATE", size_hint=(.3, .1),pos_hint={'x':.05, 'y':.2})
 
+        
+        
+        # Gather the values from the ext box and pass them to the matrix
+        # calculation, after that the value of the forces return
+       
+
+        def calculate_break_point(forces,material):
+
+            materials = [1000,2000,3000,4000]
+
+            print materials[int(material)]
+            print abs(float(forces[0]))
+            try:
+                for force in forces:
+                    if abs(float(forces[0])) > materials[int(material)]:
+                        print "BREAKS"
+                    else:
+                        print "PASS"
+            except Exception as e:
+                Logger.exception('Material does not exist')
+
+
         def callback(instance):
+
+            forces = []
+
             print('The button is being pressed')
             if {weight.text and angle1.text and angle2.text and material.text}:
-                
-                cmd = "./main " + weight.text \
-                        + " " + angle1.text \
-                        + " " + angle2.text \
-                        + " " + material.text
-
-                print(cmd)
             
-                # load the image
-                os.system(cmd)
+               # execute the process 
+                process = Popen(["./main",weight.text,angle1.text,angle2.text,material.text], stdout=PIPE)
+                (output, err) = process.communicate()
+                exit_code = process.wait()
+        
+                print(output)
+
+                for line in output.splitlines():
+                    if "Force" in line:
+                        forces.append(line.split(":")[1].strip())
+                
+                print forces
+
+                calculate_break_point(forces,material.text)
+
+                # reload the image
                 picture.reload()
 
         go_button.bind(on_press=callback)

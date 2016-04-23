@@ -127,10 +127,8 @@ int main(int argc, char* argv[])
 	double det;
 	int code = solveByGaussJordan(ab, 2, solucion, det);
 	for (int i = 0; i < 2; i++) {
-		cout << "F" << i << ": " << solucion[i] << endl;
+		cout << "Force_" << i << ": " << solucion[i] << endl;
 	}
-	cout << det << endl;
-
 
     //plot vectors
     //TODO put this in a function please :) 
