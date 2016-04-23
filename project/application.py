@@ -66,7 +66,7 @@ class PicturesApp(App):
             
                 # load the image
                 os.system(cmd)
-                picture.reload()
+                graph.reload()
 
         go_button.bind(on_press=callback)
 
