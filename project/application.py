@@ -10,6 +10,7 @@ import os
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.image import Image
 
 class Picture(Scatter):
     source = StringProperty(None)
@@ -23,11 +24,12 @@ class PicturesApp(App):
 
         try:
             # load the image
-            picture = Picture(source="rplot.jpg",pos_hint={'x':.50, 'y':.20})
+            picture = Image(source='rplot.jpg', pos_hint={'x':.50, 'y':.20})
+            
             # add to the main field
             root.add_widget(picture)
         except Exception as e:
-            Logger.exception('Pictures: Unable to load <%s>' % filename)
+            Logger.exception('Pictures: Unable to load ')
 
         #labels
         main_label = Label(text = "Hello Engineer", size_hint=(1, .55),pos_hint={'x':0, 'y':.70})
@@ -60,6 +62,7 @@ class PicturesApp(App):
             
                 # load the image
                 os.system(cmd)
+                picture.reload()
 
         go_button.bind(on_press=callback)
 
