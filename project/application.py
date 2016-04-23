@@ -24,7 +24,7 @@ class PicturesApp(App):
 
         try:
             # load the image
-            picture = Image(source='rplot.jpg', pos_hint={'x':.50, 'y':.20})
+            picture = Image(source='rplot.jpg', size_hint=(.5, 1), pos_hint={'x':.50, 'y':.10})
             
             # add to the main field
             root.add_widget(picture)
@@ -37,7 +37,7 @@ class PicturesApp(App):
         angle1_label = Label(text = "Please specify the angle of tensor 1", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.45})
         angle2_label = Label(text = "Please specify the angle of tensor 2", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.30})
         material_label = Label(text = "Please specify the material of the tensioners", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.15})
-        pass_fail_label = Label(text = "PASS", size_hint=(1, .55),pos_hint={'x':0.3, 'y':.1})
+        pass_fail_label = Label(text = "PASS", size_hint=(1, .55),pos_hint={'x':0.1, 'y':-.05})
         
         #text inputs
         weight = TextInput(text='', multiline=False,password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.75})
