@@ -24,10 +24,14 @@ class PicturesApp(App):
 
         try:
             # load the image
-            picture = Image(source='rplot.jpg', size_hint=(.5, 1), pos_hint={'x':.50, 'y':.10})
+            graph = Image(source='rplot.jpg', size_hint=(10, .4), pos_hint={'x':-4.15, 'y':.50})
+	    table = Image(source='table.png', size_hint=(10, .4), pos_hint={'x':-4.17, 'y':.05})
+	    image_material = Image(source='image_material.png', size_hint=(10, .4), pos_hint={'x':-4.419, 'y':.05})
             
             # add to the main field
-            root.add_widget(picture)
+            root.add_widget(graph)
+            root.add_widget(table)
+            root.add_widget(image_material)
         except Exception as e:
             Logger.exception('Pictures: Unable to load ')
 
@@ -37,7 +41,7 @@ class PicturesApp(App):
         angle1_label = Label(text = "Please specify the angle of tensor 1", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.45})
         angle2_label = Label(text = "Please specify the angle of tensor 2", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.30})
         material_label = Label(text = "Please specify the material of the tensioners", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.15})
-        pass_fail_label = Label(text = "PASS", size_hint=(1, .55),pos_hint={'x':0.1, 'y':-.05})
+        pass_fail_label = Label(text = "PASS", size_hint=(1, .55),pos_hint={'x':-25, 'y':-1})
         
         #text inputs
         weight = TextInput(text='', multiline=False,password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.75})
