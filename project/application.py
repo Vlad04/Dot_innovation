@@ -16,9 +16,9 @@ class Picture(Scatter):
 
 class PicturesApp(App):
 
-    def build(root):
 
-        # the root is created in pictures.kv
+    # the root is created in pictures.kv
+    def build(root):
         root = root.root
 
         try:
@@ -38,15 +38,31 @@ class PicturesApp(App):
         pass_fail_label = Label(text = "PASS", size_hint=(1, .55),pos_hint={'x':0.3, 'y':.1})
         
         #text inputs
-        weight = TextInput(password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.75})
-        angle1 = TextInput(password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.60})
-        angle2 = TextInput(password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.45})
-        material = TextInput(password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.30})
+        weight = TextInput(text='', multiline=False,password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.75})
+        angle1 = TextInput(text='', multiline=False,password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.60})
+        angle2 = TextInput(text='', multiline=False,password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.45})
+        material = TextInput(text='', multiline=False,password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.30})
+
 
         #buttons
         go_button = Button(text = "CALCULATE", size_hint=(.3, .1),pos_hint={'x':.05, 'y':.2})
-	
-		
+
+        def callback(instance):
+            print('The button is being pressed')
+            if {weight.text and angle1.text and angle2.text and material.text}:
+                
+                cmd = "./main " + weight.text \
+                        + " " + angle1.text \
+                        + " " + angle2.text \
+                        + " " + material.text
+
+                print(cmd)
+            
+                # load the image
+                os.system(cmd)
+
+        go_button.bind(on_press=callback)
+
         #add to frame
         root.add_widget(main_label)
         root.add_widget(weight)
@@ -60,15 +76,12 @@ class PicturesApp(App):
         root.add_widget(pass_fail_label)
         root.add_widget(go_button)
 
-	def botton(root):
-            cmd = "./main " + str(weight) + " "+ str(angle1) + " " + str(engle2) + " " + str(material)
-        # load the image
-        os.system("./main 10 50 50 2")
-
-
     def on_pause(root):
         return True
 
+
+        """
+        """
 
 if __name__ == '__main__':
     PicturesApp().run()
