@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
 
 	// sum F in y
 	ab[1][0] = cos(angle_1*PI / 180);
-	ab[1][1] = cos(angle_2*PI / 180);
+	ab[1][1] = -1 * cos(angle_2*PI / 180);
 	ab[1][2] = 0;
 
 	//print matrix
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
 	double det;
 	int code = solveByGaussJordan(ab, 2, solucion, det);
 	for (int i = 0; i < 2; i++) {
-		cout << solucion[i] << endl;
+		cout << "F" << i << ": " << solucion[i] << endl;
 	}
 	cout << det << endl;
 
