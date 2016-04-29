@@ -24,27 +24,24 @@ class PicturesApp(App):
         try:
             # load the image
             graph = Image(source='rplot.jpg', size_hint=(10, .4), pos_hint={'x':-4.15, 'y':.50})
-	    #pass_image = Image(source='pass.png', size_hint=(.25,.25), pos_hint={'x':.45,'y':.60})
-	    #breaks_image = Image(source='breaks.jpg', size_hint=(.25,.25), pos_hint={'x':.45,'y':.60})
-	    table = Image(source='table.png', size_hint=(10, .4), pos_hint={'x':-4.17, 'y':.05})
-	    image_material = Image(source='image_material.png', size_hint=(10, .4), pos_hint={'x':-4.419, 'y':.05})
+            pass_image = Image(source='pass.jpg', size_hint=(.25,.25), pos_hint={'x':.45,'y':.60})
+            table = Image(source='table.png', size_hint=(10, .4), pos_hint={'x':-4.17, 'y':.05})
+            image_material = Image(source='image_material.png', size_hint=(10, .4), pos_hint={'x':-4.419, 'y':.05})
             
             # add to the main field
             root.add_widget(graph)
             root.add_widget(table)
-	    #root.add_widget(pass_image)
-	    #root.add_widget(breaks_image)
+            root.add_widget(pass_image)
             root.add_widget(image_material)
         except Exception as e:
             Logger.exception('Pictures: Unable to load ')
 
         #labels
         main_label = Label(text = "Hello Engineer", size_hint=(1, .55),pos_hint={'x':0, 'y':.70})
-        weight_label = Label(text = "Please specify the weight of the tube in Newtons", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.60})
-        angle1_label = Label(text = "Please specify the angle of tensor 1", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.45})
-        angle2_label = Label(text = "Please specify the angle of tensor 2", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.30})
-        material_label = Label(text = "Please specify the material of the tensioners", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.15})
-        #pass_fail_label = Label(text = "PASS", size_hint=(1, .55),pos_hint={'x':.35, 'y':.65})
+        weight_label = Label(text = "Please specify the weight of the tube in Pounds", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.60})
+        angle1_label = Label(text = "Please specify the angle of Tensor 1", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.45})
+        angle2_label = Label(text = "Please specify the angle of Tensor 2", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.30})
+        material_label = Label(text = "Please specify Diameter of the cable", size_hint=(1, .55),pos_hint={'x':-.25, 'y':.15})
         
         #text inputs
         weight = TextInput(text='', multiline=False,password=False, size_hint=(.4, .10),pos_hint={'x':.05, 'y':.75})
@@ -72,14 +69,13 @@ class PicturesApp(App):
                 for force in forces:
                     if abs(float(forces[0])) > materials[int(material)]:
                         print "BREAKS"
-			#root.add_widget(breaks_image)
-			pass_fail_label = Label(text = "BREAKS", size_hint=(1, .55),pos_hint={'x':.35, 'y':.65})
+                        pass_image.source = 'breaks.jpg'
+                        pass_image.reload()
 			
                     else:
                         print "PASS"
-			#root.add_widget(pass_image)
-			pass_fail_label = Label(text = "PASS", size_hint=(1, .55),pos_hint={'x':.35, 'y':.65})
-		root.add_widget(pass_fail_label)
+                        pass_image.source = 'pass.jpg'
+                        pass_image.reload()
 		
             except Exception as e:
                 Logger.exception('Material does not exist')
@@ -107,8 +103,6 @@ class PicturesApp(App):
                 calculate_break_point(forces,material.text)
                 # reload the image
                 graph.reload()
-		#pass_image.reload()
-		#breaks_image.reload()
 
         go_button.bind(on_press=callback)
 
@@ -122,7 +116,6 @@ class PicturesApp(App):
         root.add_widget(angle1_label)
         root.add_widget(angle2_label)
         root.add_widget(material_label)
-        #root.add_widget(pass_fail_label)
         root.add_widget(go_button)
 
     def on_pause(root):
