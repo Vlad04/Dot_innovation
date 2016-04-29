@@ -59,13 +59,8 @@ class PicturesApp(App):
 
         def calculate_break_point(forces,material):
 
-            materials = {13: 20.4, 16: 30.6, 18:38.5, 19:42.9, 22:57.2,
-                    25.4:75.8, 26:79.3 , 28:91.6, 30:105, 32:119 }
-
+            materials = {13: 20.4, 16: 30.6, 18:38.5, 19:42.9, 22:57.2,25.4:75.8, 26:79.3 , 28:91.6, 30:105, 32:119 }
             ton = 2000
-
-            print materials[float(material)]
-            print abs(float(forces[0]))
 
             try:
                 for force in forces:
