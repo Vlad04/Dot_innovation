@@ -52,8 +52,6 @@ class PicturesApp(App):
 
         #buttons
         go_button = Button(text = "CALCULATE", size_hint=(.3, .1),pos_hint={'x':.05, 'y':.2})
-
-        
         
         # Gather the values from the ext box and pass them to the matrix
         # calculation, after that the value of the forces return
@@ -61,25 +59,41 @@ class PicturesApp(App):
 
         def calculate_break_point(forces,material):
 
-            materials = [1000,2000,3000,4000]
+            materials = {13: 20.4, 16: 30.6, 18:38.5, 19:42.9, 22:57.2,
+                    25.4:75.8, 26:79.3 , 28:91.6, 30:105, 32:119 }
 
-            print materials[int(material)]
+            ton = 2000
+
+            print materials[float(material)]
             print abs(float(forces[0]))
+
             try:
                 for force in forces:
-                    if abs(float(forces[0])) > materials[int(material)]:
+                    if abs(float(forces[0])) > materials[float(material)] * ton:
                         print "BREAKS"
+
+                        print "\nMax tension to break:"
+                        print materials[float(material)] * ton
+
+                        print " \nCurrent tension:"
+                        print abs(float(forces[0]))
+
                         pass_image.source = 'breaks.jpg'
                         pass_image.reload()
 			
                     else:
                         print "PASS"
+
+                        print "\nMax tension to break:"
+                        print materials[float(material)] * ton
+
+                        print " \nCurrent tension:"
+                        print abs(float(forces[0]))
                         pass_image.source = 'pass.jpg'
                         pass_image.reload()
 		
             except Exception as e:
                 Logger.exception('Material does not exist')
-
 
         def callback(instance):
 
@@ -121,9 +135,6 @@ class PicturesApp(App):
     def on_pause(root):
         return True
 
-
-        """
-        """
 
 if __name__ == '__main__':
     PicturesApp().run()
