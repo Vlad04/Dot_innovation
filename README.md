@@ -18,3 +18,4 @@ https://www.math.hmc.edu/calculus/tutorials/matrixalgebra/
 
 Author: Vladimir Rodriguez Bahena
 # ALGRITHM_PROJECT
+# Dot_innovation
